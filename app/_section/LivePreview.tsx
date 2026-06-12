@@ -4,7 +4,7 @@ import type { CSSProperties } from "react";
 import type { ContainerState } from "../types";
 
 function box(state: ContainerState): CSSProperties {
-  return { width: state.fluid ? "100%" : state.width, maxWidth: state.maxWidth, minHeight: state.minHeight, padding: state.safeArea ? `max(${state.padding}px, env(safe-area-inset-left))` : state.padding, marginInline: state.centered ? "auto" : undefined, marginBlock: state.margin, display: "grid", alignContent: "center", gap: state.gap, borderRadius: state.radius, border: `${state.borderWidth}px solid ${state.border}`, boxShadow: `0 ${Math.round(state.shadow / 3)}px ${state.shadow}px rgba(0,0,0,.28)`, background: state.background, color: state.foreground, fontFamily: state.fontFamily };
+  return { width: state.fluid ? "100%" : state.width, maxWidth: state.maxWidth, minHeight: state.minHeight, padding: state.safeArea ? `max(${state.padding}px, env(safe-area-inset-left))` : state.padding, marginInline: state.centered ? "auto" : undefined, marginBlock: state.margin, display: "grid", alignContent: "center", gap: state.gap, borderRadius: state.radius, border: `${state.borderWidth}px solid ${state.border}`, boxShadow: `0 ${Math.round(state.shadow / 3)}px ${state.shadow}px rgba(0,0,0,.28)`, background: state.background, color: state.foreground, fontFamily: state.fontFamily, transition: state.motion ? "background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease" : "none" };
 }
 
 export default function LivePreview({ state }: { state: ContainerState }) {

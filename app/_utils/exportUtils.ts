@@ -29,7 +29,8 @@ export default function ContainerComponent() {
     boxShadow: "0 " + Math.round(state.shadow / 3) + "px " + state.shadow + "px rgba(0,0,0,.28)",
     background: state.background,
     color: state.foreground,
-    fontFamily: state.fontFamily
+    fontFamily: state.fontFamily,
+    transition: state.motion ? "background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease" : "none"
   };
 
   return (
