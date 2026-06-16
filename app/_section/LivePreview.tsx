@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import type { ContainerState } from "../types";
 import { SYSTEM_FONTS } from "@/components/shared/typography/fontConstants";
 
@@ -34,6 +34,14 @@ function box(state: ContainerState): CSSProperties {
 export default function LivePreview({ state }: { state: ContainerState }) {
   const Element = state.element === "hr" ? "div" : state.element;
   const role = state.role === "presentation" || state.role === "group" || state.role === "region" ? state.role : undefined;
+  const [isHovered, setIsHovered] = useState(false);
   const style = box(state);
-  return <Element id={state.id} role={role} aria-label={state.landmarkLabel || undefined} tabIndex={state.tabIndex} style={style}><div style={{ display: "grid", gap: Math.max(8, state.gap / 2) }}><p style={{ margin: 0, color: state.accent, fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" }}>{state.element} container</p><h3 style={{ margin: 0, fontSize: state.titleSize, fontWeight: state.fontWeight }}>{state.title}</h3><p style={{ margin: 0, color: state.muted, fontSize: state.bodySize }}>{state.description}</p></div></Element>;
+  const hovered = state.hoverEnabled && isHovered;
+  const finalStyle: CSSProperties = {
+    ...style,
+    background: hovered ? state.hoverBg : style.background,
+    borderColor: hovered ? state.hoverBorder : state.border,
+    boxShadow: hovered ? state.hoverShadow : style.boxShadow,
+  };
+  return <Element id={state.id} role={role} aria-label={state.landmarkLabel || undefined} tabIndex={state.tabIndex} style={finalStyle} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}><div style={{ display: "grid", gap: Math.max(8, state.gap / 2) }}><p style={{ margin: 0, color: state.accent, fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" }}>{state.element} container</p><h3 style={{ margin: 0, fontSize: state.titleSize, fontWeight: state.fontWeight }}>{state.title}</h3><p style={{ margin: 0, color: state.muted, fontSize: state.bodySize }}>{state.description}</p></div></Element>;
 }
